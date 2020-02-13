@@ -1,32 +1,39 @@
 #!/usr/bin/env sh
+function error() {
+  echo "===== ERROR: "
+  echo "$1"
+  echo "====="
+}
 
 function preflightChecklist() {
 
+  printenv
   echo "---------------------------------------"
   echo "Starting preflightChecklist()"
 
-  printenv
 
   # Check if all environment variables are set
   if [ -z ${INPUT_CLOUDWAYS_USERNAME} ]; then
-    echo "Missing cloudways_username input!"
+    error "Missing cloudways_username input!"
     exit 1
   fi
 
   if [ -z ${INPUT_CLOUDWAYS_SERVER} ]; then
-    echo "Missing cloudways_server input!"
+    error "Missing cloudways_server input!"
     exit 1
   fi
 
   if [ -z ${INPUT_CLOUDWAYS_DEPLOY_PATH} ]; then
-    echo "Missing cloudways_deploy_path input!"
+    error "Missing cloudways_deploy_path input!"
     exit 1
   fi
 
   if [ -z ${INPUT_CLOUDWAYS_SSH_KEY} ]; then
-    echo "Missing cloudways_ssh_key input!"
+    error "Missing cloudways_ssh_key input!"
     exit 1
   fi
+
+  echo "1. All variables are present"
 
   echo "${INPUT_CLOUDWAYS_USERNAME}"
   echo "${INPUT_CLOUDWAYS_SERVER}"
@@ -34,6 +41,8 @@ function preflightChecklist() {
   echo "${INPUT_CLOUDWAYS_SSH_KEY}"
 
   # Check if we can connect to the server
+  ssh ${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER} "echo 2>&1" && echo "2. SSH connection OK" || error "Unable to SSH into the server. Please check your cloudways_username & cloudways_server inputs. Also make sure cloudways_ssh_key was added to Cloudways (for cloudways_username user)."
+
   # Check if we can access the theme folder
   echo "---------------------------------------"
 }
