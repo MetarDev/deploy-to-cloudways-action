@@ -12,8 +12,8 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          cloudways_username: 'test_username'
-          cloudways_server: '123.123.123.33'
+          cloudways_username: ${{ secrets.CLOUDWAYS_METADEV_USER }}
+          cloudways_server: ${{ secrets.CLOUDWAYS_METADEV_IP }}
           cloudways_deploy_path: 'aaa'
           cloudways_ssh_private_key: ${{ secrets.TEST_CW_SSH_PRIVATE_KEY }}
 
