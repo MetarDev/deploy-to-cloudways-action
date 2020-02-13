@@ -6,17 +6,17 @@ inputs:
     description: 'Who to greet'
     required: true
     default: ''
-  cloudways-username:
+  cloudways_username:
     description: 'Username we are using to SSH into your Cloudways server. You need to have an SSH key setup for that user'
     required: true
-  cloudways-server:
+  cloudways_server:
     description: 'IP of your Cloudways server.'
     required: true
-  cloudways-deploy-path:
+  cloudways_deploy_path:
     description: 'Path where you wish to deploy your changes.'
     required: true
-  cloudways-ssh-key:
-    description: 'SSH key for your cloudways-username. You should add this through Github Secrets: https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets'
+  cloudways_ssh_key:
+    description: 'SSH key for your cloudways_username. You should add this through Github Secrets: https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets'
     required: true
 outputs:
   time: # id of output

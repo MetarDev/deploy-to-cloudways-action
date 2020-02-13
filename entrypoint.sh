@@ -8,30 +8,30 @@ function preflightChecklist() {
   printenv
 
   # Check if all environment variables are set
-  if [ -z ${INPUT_CLOUDWAYS-USERNAME} ]; then
-    echo "Missing cloudways-username input!"
+  if [ -z ${INPUT_CLOUDWAYS_USERNAME} ]; then
+    echo "Missing cloudways_username input!"
     exit 1
   fi
 
-  if [ -z ${INPUT_CLOUDWAYS-SERVER} ]; then
-    echo "Missing cloudways-server input!"
+  if [ -z ${INPUT_CLOUDWAYS_SERVER} ]; then
+    echo "Missing cloudways_server input!"
     exit 1
   fi
 
-  if [ -z ${INPUT_CLOUDWAYS-DEPLOY-PATH} ]; then
-    echo "Missing cloudways-deploy-path input!"
+  if [ -z ${INPUT_CLOUDWAYS_DEPLOY_PATH} ]; then
+    echo "Missing cloudways_deploy_path input!"
     exit 1
   fi
 
-  if [ -z ${INPUT_CLOUDWAYS-SSH-KEY} ]; then
-    echo "Missing cloudways-ssh-key input!"
+  if [ -z ${INPUT_CLOUDWAYS_SSH_KEY} ]; then
+    echo "Missing cloudways_ssh_key input!"
     exit 1
   fi
 
-  echo "${INPUT_CLOUDWAYS-USERNAME}"
-  echo "${INPUT_CLOUDWAYS-SERVER}"
-  echo "${INPUT_CLOUDWAYS-DEPLOY-PATH}"
-  echo "${INPUT_CLOUDWAYS-SSH-KEY}"
+  echo "${INPUT_CLOUDWAYS_USERNAME}"
+  echo "${INPUT_CLOUDWAYS_SERVER}"
+  echo "${INPUT_CLOUDWAYS_DEPLOY_PATH}"
+  echo "${INPUT_CLOUDWAYS_SSH_KEY}"
 
   # Check if we can connect to the server
   # Check if we can access the theme folder
