@@ -15,5 +15,5 @@ jobs:
           cloudways-username: 'Test usernam,e'
           cloudways-server: 'tst Server'
           cloudways-deploy-path: 'aaa'
-          # cloudways-ssh-key: 'aaa'
+          cloudways-ssh-key: 'aaa'
 
