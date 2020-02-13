@@ -12,8 +12,8 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          cloudways-username: 'Test usernam,e'
+          cloudways-username: 'Test username'
           cloudways-server: 'tst Server'
           cloudways-deploy-path: 'aaa'
-          cloudways-ssh-key: 'aaa'
+          # cloudways-ssh-key: 'aaa'
 

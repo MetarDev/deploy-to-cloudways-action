@@ -7,7 +7,7 @@ inputs:
     required: true
     default: ''
   cloudways-username:
-    description: 'Username we're using to SSH into your Cloudways server. You need to have an SSH key setup for that user.'
+    description: 'Username we are using to SSH into your Cloudways server. You need to have an SSH key setup for that user'
     required: true
     default: ''
   cloudways-server:
