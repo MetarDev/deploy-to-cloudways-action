@@ -1,7 +1,57 @@
-#!/bin/sh -l
+#!/usr/bin/env sh
 
-echo "Hello $1"
-printenv
-printenv WHAT_TO_SAY
-time=$(date)
-echo ::set-output name=time::$time
+function preflightChecklist() {
+
+  echo "---------------------------------------"
+  echo "Starting preflightChecklist()"
+
+  # Check if all environment variables are set
+  if [[ -z "${INPUT_CLOUDWAYS-USERNAME}" ]]; then
+    echo "Missing cloudways-username input!"
+    exit 1
+  fi
+
+  if [[ -z "${INPUT_CLOUDWAYS-SERVER}" ]]; then
+    echo "Missing cloudways-server input!"
+    exit 1
+  fi
+
+  if [[ -z "${INPUT_CLOUDWAYS-DEPLOY-PATH}" ]]; then
+    echo "Missing cloudways-deploy-path input!"
+    exit 1
+  fi
+
+  if [[ -z "${INPUT_CLOUDWAYS-SSH-KEY}" ]]; then
+    echo "Missing cloudways-ssh-key input!"
+    echo ::set-output name=time::$time
+    exit 1
+  fi
+
+  # Check if we can connect to the server
+  # Check if we can access the theme folder
+  echo "---------------------------------------"
+}
+
+function addKeyToKeygen() {
+  echo "---------------------------------------"
+  echo "Starting addKeyToKeygen()"
+  echo "---------------------------------------"
+}
+
+function deploy() {
+  echo "---------------------------------------"
+  echo "Starting deploy()"
+  # cd ~
+  # rm -rf ~/tmp-deployment
+  # git clone git@github.com:IvanGrginovInf/metadev-theme.git tmp-deployment
+  # cd ~/tmp-deployment
+  # npm install
+  # composer install --no-dev --no-scripts
+  # npm run build
+  # rsync -avz ~/tmp-deployment metadev_prod@167.172.58.202:~/public_html/wp-content/themes/metadev
+  echo "---------------------------------------"
+}
+
+preflightChecklist
+addKeyToKeygen
+deploy

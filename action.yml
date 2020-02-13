@@ -1,16 +1,30 @@
 # action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Deploy to Cloudways'
+description: 'Deploy your WordPress theme to your Cloudways server.'
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'
     required: true
-    default: 'World'
+    default: ''
+  cloudways-username:
+    description: 'Username we're using to SSH into your Cloudways server. You need to have an SSH key setup for that user.'
+    required: true
+    default: ''
+  cloudways-server:
+    description: 'IP of your Cloudways server.'
+    required: true
+    default: ''
+  cloudways-deploy-path:
+    description: 'Path where you wish to deploy your changes.'
+    required: true
+    default: ''
+  cloudways-ssh-key:
+    description: 'SSH key for your cloudways-username. You should add this through Github Secrets: https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets'
+    required: true
+    default: ''
 outputs:
   time: # id of output
     description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.who-to-greet }}

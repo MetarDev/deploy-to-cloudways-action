@@ -12,7 +12,8 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          who-to-greet: 'Mona the Octocat'
-        env:
-          WHAT_TO_SAY: ${{ 'what do I say to this wonderful action?' }}
+          cloudways-username: 'Test usernam,e'
+          cloudways-server: 'tst Server'
+          cloudways-deploy-path: 'aaa'
+          # cloudways-ssh-key: 'aaa'
 
