@@ -1,7 +1,13 @@
 #!/usr/bin/env sh
 
-function addKeyToKeygen() {
+function preflightChecklist() {
+  # Check if all environment variables are set
+  # Check if we can connect to the server
+  # Check if we can access the theme folder
+}
 
+function addKeyToKeygen() {
+  
 }
 
 function deploy() {
@@ -15,5 +21,6 @@ function deploy() {
   rsync -avz ~/tmp-deployment metadev_prod@167.172.58.202:~/public_html/wp-content/themes/metadev
 }
 
+preflightChecklist
 addKeyToKeygen
 deploy
