@@ -6,7 +6,7 @@ NC='\033[0m' # No Color
 
 function error() {
   echo -e "${RED}===== ERROR: ${NC}"
-  echo "$1"
+  echo -e "$1"
   echo -e "${RED}=====${NC}"
   exit 1
 }
