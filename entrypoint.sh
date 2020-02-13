@@ -5,9 +5,9 @@ LIGHTBLUE='\033[1;34m'
 NC='\033[0m' # No Color
 
 function error() {
-  echo "${RED}===== ERROR: ${NC}"
+  echo -e "${RED}===== ERROR: ${NC}"
   echo "$1"
-  echo "${RED}=====${NC}"
+  echo -e "${RED}=====${NC}"
   exit 1
 }
 
@@ -38,7 +38,7 @@ function preflightChecklist() {
     error "Missing cloudways_ssh_private_key input!"
   fi
 
-  echo "${GREEN}1. All variables are present${NC}"
+  echo -e "${GREEN}1. All variables are present${NC}"
 
   echo "${INPUT_CLOUDWAYS_USERNAME}"
   echo "${INPUT_CLOUDWAYS_SERVER}"
@@ -53,7 +53,7 @@ function preflightChecklist() {
   echo ${INPUT_CLOUDWAYS_SSH_PRIVATE_KEY} > deployment_key.txt
 
   # Check if we can connect to the server
-  ssh -i deployment_key.txt ${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER} "echo 2>&1" && echo "${GREEN}2. SSH connection OK${NC}" || error "Unable to SSH into the server ${LIGHTBLUE}${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER}${NC}. Please check your ${LIGHTBLUE}cloudways_username${NC} & ${LIGHTBLUE}cloudways_server${NC} inputs. Also make sure cloudways_ssh_private_key was added to Cloudways (for cloudways_username user)."
+  ssh -i deployment_key.txt ${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER} "echo 2>&1" && echo -e "${GREEN}2. SSH connection OK${NC}" || error "Unable to SSH into the server ${LIGHTBLUE}${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER}${NC}. Please check your ${LIGHTBLUE}cloudways_username${NC} & ${LIGHTBLUE}cloudways_server${NC} inputs. Also make sure cloudways_ssh_private_key was added to Cloudways (for cloudways_username user)."
 
   # Check if we can access the theme folder
 }
