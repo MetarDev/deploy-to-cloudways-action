@@ -6,26 +6,30 @@ function preflightChecklist() {
   echo "Starting preflightChecklist()"
 
   # Check if all environment variables are set
-  if [[ -z "${INPUT_CLOUDWAYS-USERNAME}" ]]; then
+  if [ -z ${INPUT_CLOUDWAYS-USERNAME} ]; then
     echo "Missing cloudways-username input!"
     exit 1
   fi
 
-  if [[ -z "${INPUT_CLOUDWAYS-SERVER}" ]]; then
+  if [ -z ${INPUT_CLOUDWAYS-SERVER} ]; then
     echo "Missing cloudways-server input!"
     exit 1
   fi
 
-  if [[ -z "${INPUT_CLOUDWAYS-DEPLOY-PATH}" ]]; then
+  if [ -z ${INPUT_CLOUDWAYS-DEPLOY-PATH} ]; then
     echo "Missing cloudways-deploy-path input!"
     exit 1
   fi
 
-  if [[ -z "${INPUT_CLOUDWAYS-SSH-KEY}" ]]; then
+  if [ -z ${INPUT_CLOUDWAYS-SSH-KEY} ]; then
     echo "Missing cloudways-ssh-key input!"
-    echo ::set-output name=time::$time
     exit 1
   fi
+
+  echo "${INPUT_CLOUDWAYS-USERNAME}"
+  echo "${INPUT_CLOUDWAYS-SERVER}"
+  echo "${INPUT_CLOUDWAYS-DEPLOY-PATH}"
+  echo "${INPUT_CLOUDWAYS-SSH-KEY}"
 
   # Check if we can connect to the server
   # Check if we can access the theme folder
