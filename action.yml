@@ -15,7 +15,7 @@ inputs:
   cloudways_deploy_path:
     description: 'Path where you wish to deploy your changes.'
     required: true
-  cloudways_ssh_key:
+  cloudways_ssh_private_key:
     description: 'SSH key for your cloudways_username. You should add this through Github Secrets: https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets'
     required: true
 outputs:
