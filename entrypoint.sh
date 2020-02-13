@@ -5,6 +5,8 @@ function preflightChecklist() {
   echo "---------------------------------------"
   echo "Starting preflightChecklist()"
 
+  printenv
+
   # Check if all environment variables are set
   if [ -z ${INPUT_CLOUDWAYS-USERNAME} ]; then
     echo "Missing cloudways-username input!"
