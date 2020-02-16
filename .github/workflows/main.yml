@@ -14,6 +14,10 @@ jobs:
         with:
           cloudways_username: ${{ secrets.CLOUDWAYS_METADEV_USER }}
           cloudways_server: ${{ secrets.CLOUDWAYS_METADEV_IP }}
-          cloudways_deploy_path: 'aaa'
+          cloudways_deploy_path: '~/public_html/wp-content/themes/test-theme'
           cloudways_ssh_private_key: ${{ secrets.TEST_CW_SSH_PRIVATE_KEY }}
+          build_script: node -v; \
+            composer --version; \
+            npm --version"
+          # build_script: "npm install && composer install --no-dev --no-scripts"
 

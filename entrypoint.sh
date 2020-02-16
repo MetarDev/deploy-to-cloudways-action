@@ -5,6 +5,10 @@ GREEN='\033[0;32m'
 LIGHTBLUE='\033[1;34m'
 NC='\033[0m' # No Color
 
+function success() {
+  echo -e "${GREEN}${1}${NC}"
+}
+
 function error() {
   echo -e "${RED}===== ERROR: ${NC} $1"
   exit 1
@@ -41,38 +45,43 @@ function preflightChecklist() {
   # 1. Check ssh connection
   # -------------------------------------------------------------
 
-  # Save key to file
-  DEPLOY_KEY_PATH="~/.ssh/deployment_key"
-  echo $INPUT_CLOUDWAYS_SSH_PRIVATE_KEY > $DEPLOY_KEY_PATH
-  echo -e "Host target-server\n  HostName ${INPUT_CLOUDWAYS_SERVER}\n  Port ${INPUT_CLOUDWAS_PORT}\n  User ${INPUT_CLOUDWAYS_USERNAME}\n  IdentityFile ~/.ssh/deployment_key" > $DEPLOY_KEY_PATH
-  echo "---"
-  cat ~/.ssh/config
-  echo "---"
-
+  # Setup key for SSHing into the target server
+  SSH_DEPLOY_KEY_PATH=~/.ssh/deployment_key
+  SSH_CONFIG_PATH=~/.ssh/config
+  touch $SSH_DEPLOY_KEY_PATH
+  chmod 0600 $SSH_DEPLOY_KEY_PATH
+  echo -e "$INPUT_CLOUDWAYS_SSH_PRIVATE_KEY" > $SSH_DEPLOY_KEY_PATH
+  echo -e "Host target-server\n  HostName ${INPUT_CLOUDWAYS_SERVER}\n  Port ${INPUT_CLOUDWAYS_PORT}\n  User ${INPUT_CLOUDWAYS_USERNAME}\n  IdentityFile ~/.ssh/deployment_key" > $SSH_CONFIG_PATH
+  ssh-keyscan -H $INPUT_CLOUDWAYS_SERVER >> ~/.ssh/known_hosts 2> /dev/null
+  
   # Check if we can connect to the server
-  ssh target-server "echo 2>&1" && echo -e "${GREEN}2. SSH connection OK${NC}" || error "Unable to SSH into the server ${LIGHTBLUE}${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER}${NC}. Please check your ${LIGHTBLUE}cloudways_username${NC} & ${LIGHTBLUE}cloudways_server${NC} inputs. Also make sure cloudways_ssh_private_key was added to Cloudways (for ${LIGHTBLUE}cloudways_username${NC} user)."
-}
-
-function addKeyToKeygen() {
-  echo "---------------------------------------"
-  echo "Starting addKeyToKeygen()"
-  echo "---------------------------------------"
+  ssh target-server "echo 2>&1" && success "2. SSH connection OK" || error "Unable to SSH into the server ${LIGHTBLUE}${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER}${NC}. Please check your ${LIGHTBLUE}cloudways_username${NC} & ${LIGHTBLUE}cloudways_server${NC} inputs. Also make sure cloudways_ssh_private_key was added to Cloudways (for ${LIGHTBLUE}cloudways_username${NC} user)."
+  success "All good"
 }
 
 function deploy() {
   echo "---------------------------------------"
   echo "Starting deploy()"
   echo "---------------------------------------"
-  # cd ~
-  # rm -rf ~/tmp-deployment
-  # git clone git@github.com:IvanGrginovInf/metadev-theme.git tmp-deployment
-  # cd ~/tmp-deployment
-  # npm install
-  # composer install --no-dev --no-scripts
-  # npm run build
-  # rsync -avz ~/tmp-deployment metadev_prod@167.172.58.202:~/public_html/wp-content/themes/metadev
+
+  echo ""
+  echo "1. Cloning repository"
+  TMP_PATH=~/tmp-deployment/
+  cd ~
+  ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2> /dev/null
+  git clone https://github.com/IvanGrginovInf/deploy-to-cloudways-action.git tmp-deployment
+  # git clone git@github.com:IvanGrginovInf/metadev-theme.git $TMP_PATH
+  cd $TMP_PATH
+
+  echo ""
+  echo "2. Running build script (if set)"
+  eval "$INPUT_BUILD_SCRIPT"
+
+  echo ""
+  echo "3. Deploying changes to the server"
+  ssh target-server "mkdir -p ${INPUT_CLOUDWAYS_DEPLOY_PATH}"
+  rsync -avz --delete $TMP_PATH target-server:$INPUT_CLOUDWAYS_DEPLOY_PATH
 }
 
 preflightChecklist
-addKeyToKeygen
 deploy
