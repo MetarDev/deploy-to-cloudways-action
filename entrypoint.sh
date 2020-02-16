@@ -48,6 +48,8 @@ function preflightChecklist() {
   # Setup key for SSHing into the target server
   SSH_DEPLOY_KEY_PATH=~/.ssh/deployment_key
   SSH_CONFIG_PATH=~/.ssh/config
+  mkdir -p ~/.ssh
+  ls -la ~
   touch $SSH_DEPLOY_KEY_PATH
   chmod 0600 $SSH_DEPLOY_KEY_PATH
   echo -e "$INPUT_CLOUDWAYS_SSH_PRIVATE_KEY" > $SSH_DEPLOY_KEY_PATH
