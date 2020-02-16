@@ -54,6 +54,8 @@ function preflightChecklist() {
   chmod 0600 $SSH_DEPLOY_KEY_PATH
   echo -e "$INPUT_CLOUDWAYS_SSH_PRIVATE_KEY" > $SSH_DEPLOY_KEY_PATH
   echo -e "Host target-server\n  HostName ${INPUT_CLOUDWAYS_SERVER}\n  Port ${INPUT_CLOUDWAYS_PORT}\n  User ${INPUT_CLOUDWAYS_USERNAME}\n  IdentityFile ~/.ssh/deployment_key" > $SSH_CONFIG_PATH
+  ls -la ~/.ssh
+  cat ~/.ssh/config
   ssh-keyscan -H $INPUT_CLOUDWAYS_SERVER >> ~/.ssh/known_hosts 2> /dev/null
   
   # Check if we can connect to the server
