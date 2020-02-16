@@ -2,10 +2,6 @@
 name: 'Deploy to Cloudways'
 description: 'Deploy your WordPress theme to your Cloudways server.'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: ''
   cloudways_username:
     description: 'Username we are using to SSH into your Cloudways server. You need to have an SSH key setup for that user'
     required: true
@@ -22,6 +18,10 @@ inputs:
     description: 'SSH port for SSH-ing into the target server.'
     required: false
     default: "22"
+  build_script: 
+    description: 'Here you can (optionally) define your build process (a.k.a. things that will run after your repository is clone but before deployment)'
+    required: false
+    default: ""
 outputs:
   time: # id of output
     description: 'The time we greeted you'
