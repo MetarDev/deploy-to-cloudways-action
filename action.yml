@@ -18,6 +18,10 @@ inputs:
   cloudways_ssh_private_key:
     description: 'SSH key for your cloudways_username. You should add this through Github Secrets: https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets'
     required: true
+  cloudways_port:
+    description: 'SSH port for SSH-ing into the target server.'
+    required: false
+    default: "22"
 outputs:
   time: # id of output
     description: 'The time we greeted you'

@@ -42,12 +42,15 @@ function preflightChecklist() {
   # -------------------------------------------------------------
 
   # Save key to file
-  echo ${INPUT_CLOUDWAYS_SSH_PRIVATE_KEY} > deployment_key.txt
+  DEPLOY_KEY_PATH="~/.ssh/deployment_key"
+  echo $INPUT_CLOUDWAYS_SSH_PRIVATE_KEY > $DEPLOY_KEY_PATH
+  echo -e "Host target-server\n  HostName ${INPUT_CLOUDWAYS_SERVER}\n  Port ${INPUT_CLOUDWAS_PORT}\n  User ${INPUT_CLOUDWAYS_USERNAME}\n  IdentityFile ~/.ssh/deployment_key" > $DEPLOY_KEY_PATH
+  echo "---"
+  cat ~/.ssh/config
+  echo "---"
 
   # Check if we can connect to the server
-  ssh -i deployment_key.txt ${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER} "echo 2>&1" && echo -e "${GREEN}2. SSH connection OK${NC}" || error "Unable to SSH into the server ${LIGHTBLUE}${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER}${NC}. Please check your ${LIGHTBLUE}cloudways_username${NC} & ${LIGHTBLUE}cloudways_server${NC} inputs. Also make sure cloudways_ssh_private_key was added to Cloudways (for ${LIGHTBLUE}cloudways_username${NC} user)."
-
-  # Check if we can access the theme folder
+  ssh target-server "echo 2>&1" && echo -e "${GREEN}2. SSH connection OK${NC}" || error "Unable to SSH into the server ${LIGHTBLUE}${INPUT_CLOUDWAYS_USERNAME}@${INPUT_CLOUDWAYS_SERVER}${NC}. Please check your ${LIGHTBLUE}cloudways_username${NC} & ${LIGHTBLUE}cloudways_server${NC} inputs. Also make sure cloudways_ssh_private_key was added to Cloudways (for ${LIGHTBLUE}cloudways_username${NC} user)."
 }
 
 function addKeyToKeygen() {
